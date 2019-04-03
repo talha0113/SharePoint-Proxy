@@ -1,0 +1,43 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@using Microsoft.Extensions.Configuration
+@using Microsoft.AspNetCore.Hosting
+@using System.Collections
+@inject IConfiguration Configuration
+@inject IHostingEnvironment environment
+
+<div>
+    <div>
+        <h1> SharePoint Proxy </h1>
+    </div>
+    <div>
+        <b>Active Proxy</b>
+    </div>
+    <div>
+        BaseUrl: @Model.Setting.BaseUrl
+    </div>
+    <div>
+        UserName: @Model.Setting.UserName
+    </div>
+    <div>
+        Environment: @Configuration["ASPNETCORE_ENVIRONMENT"]
+    </div>
+    <div>
+        Conrent Root Path: @environment.ContentRootPath
+    </div>
+</div>
+<br />
+@*<div>
+        <div>
+            <b>Environment Variables</b>
+        </div>
+        @foreach (DictionaryEntry environment in Environment.GetEnvironmentVariables(EnvironmentVariableTarget.Process))
+        {
+            <div>
+                @environment.Key : @environment.Value
+            </div>
+        }
+    </div>*@

@@ -1,0 +1,9 @@
+﻿*.njsproj
+*.njsproj.user
+*.yml
+*.md
+Dockerfile
+README.md
+node_modules
+.dockerignore
+

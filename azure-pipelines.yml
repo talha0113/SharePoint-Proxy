@@ -1,0 +1,85 @@
+name: $(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)
+
+resources:
+- repo: self
+  clean: true
+
+trigger:
+    branches:
+        include:
+        - master
+        - feature/*
+        - bug/*
+        
+jobs:
+- job: 'Job'
+  displayName: 'Job SharePoint Proxy'
+  pool: 'Hosted Ubuntu 1604'
+  condition: succeeded()
+  continueOnError: false
+  workspace:
+    clean: all
+  
+  variables:
+    tag_number: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
+	build_configuration: 'Release'
+
+  steps:
+
+  # Perform Tokens Replacement
+  - task: qetza.replacetokens.replacetokens-task.replacetokens@3
+    displayName: Replace
+    inputs:
+      rootDirectory: Proxy.Test
+      targetFiles: appsettings.Test.json
+
+  # Perform .Net Core Restore
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: '**/*.csproj'
+
+  # Perform .Net Core Build
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: '**/*.csproj'
+      arguments: '--configuration $(build_configuration)'
+  
+  # Perform .Net Core Test
+  - task: VSTest@2
+    displayName: Test
+    inputs:
+      testAssemblyVer2: |
+       **\*Test*.dll
+       !**\*TestAdapter.dll
+       !**\obj\**
+      searchFolder: 'Proxy.Test'
+      runTestsInIsolation: true
+      codeCoverageEnabled: true
+      testRunTitle: 'Integration Tests'
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+
+  # Perform .Net Core Publish
+  - task: DotNetCoreCLI@2
+    displayName: Publish
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'Proxy/Proxy.csproj'
+      arguments: '--configuration $(build_configuration) --output Proxy/Publish'
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
+  
+  # Publish Artifacts
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)'
+      ArtifactName: Drop
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
+
+  # Perform Code Security Check
+  - task: whitesource.ws-bolt.bolt.wss.WhiteSource Bolt@18
+    displayName: 'Code Security Check'
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
