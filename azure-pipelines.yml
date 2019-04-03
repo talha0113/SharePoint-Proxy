@@ -71,7 +71,7 @@ jobs:
       command: publish
       publishWebProjects: false
       projects: 'Proxy/Proxy.csproj'
-      arguments: '--configuration $(build_configuration) --output Proxy/Publish'
+      arguments: '--configuration $(build_configuration) --output Publish'
       zipAfterPublish: false
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
   
