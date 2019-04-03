@@ -22,7 +22,7 @@ jobs:
   
   variables:
     tag_number: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
-	build_configuration: 'Release'
+    build_configuration: 'Release'
 
   steps:
 
