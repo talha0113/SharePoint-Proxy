@@ -23,6 +23,7 @@ jobs:
   variables:
     tag_number: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
     build_configuration: 'Release'
+  - group: 'SharePoint-Proxy'
 
   steps:
 
@@ -69,6 +70,7 @@ jobs:
       publishWebProjects: false
       projects: 'Proxy/Proxy.csproj'
       arguments: '--configuration $(build_configuration) --output Proxy/Publish'
+      zipAfterPublish: false
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
   
   # Publish Artifacts
