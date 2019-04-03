@@ -23,7 +23,7 @@ jobs:
   variables:
     tag_number: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
     build_configuration: 'Release'
-  - group: 'SharePoint-Proxy'
+    - group: 'SharePoint-Proxy'
 
   steps:
 
