@@ -79,7 +79,7 @@ jobs:
   - task: PublishBuildArtifacts@1
     displayName: 'Publish'
     inputs:
-      PathtoPublish: 'Proxy/Publish'
+      PathtoPublish: 'Proxy/Publish/Proxy'
       ArtifactName: Drop
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
 
