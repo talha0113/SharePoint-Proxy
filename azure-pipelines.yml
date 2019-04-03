@@ -21,9 +21,11 @@ jobs:
     clean: all
   
   variables:
-    tag_number: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
-    build_configuration: 'Release'
-    - group: 'SharePoint-Proxy'
+  - group: 'SharePoint-Proxy'
+  - name: 'tag_number'
+    value: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
+  - name: 'build_configuration'
+    value: 'Release'
 
   steps:
 
