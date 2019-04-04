@@ -11,8 +11,8 @@ To start the proxy:
 docker run --rm --name talha0113/sharepoint-proxy -p 8080:80 -e ASPNETCORE_ENVIRONMENT='Production' -e ProxySetting:BaseUrl='<SharePoint Site Collection Url>' -e ProxySetting:UserName='<User Name>' -e ProxySetting:Password='<Password>' -i sharepoint-proxy
 ```
 Replace Following Paramaters
- - **<SharePoint Site Collection Url>**, example: (https://domain.sharepoint.com/sites/xyz)
- - **<User Name>**, example: (user@domain.onmicrosoft.com)
- - **<Password>** with actuall user password
+ - **`<SharePoint Site Collection Url>`**, example: (https://domain.sharepoint.com/sites/xyz)
+ - **`<User Name>`**, example: (user@domain.onmicrosoft.com)
+ - **`<Password>`** with actuall user password
 
 After successfull start of the container browse the url `http://localhost:8080` must see front page with proxy information. also verify the the SharePoint rest api by browsing `http://localhost:8080/_api/web`
