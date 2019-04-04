@@ -10,6 +10,10 @@ trigger:
         - master
         - feature/*
         - bug/*
+    paths:
+        include:
+        - /Proxy
+        - /Proxy.Test
         
 jobs:
 - job: 'Job'
