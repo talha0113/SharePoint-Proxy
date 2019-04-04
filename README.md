@@ -1,4 +1,5 @@
-[![Build Status](https://dev.azure.com/talha0113/Open Source/_apis/build/status/SharePoint-Proxy?branchName=master)]
+[![Build Status](https://dev.azure.com/talha0113/Open%20Source/_apis/build/status/SharePoint-Proxy?branchName=master)]
+[![Build Status](https://dev.azure.com/talha0113/Open%20Source/_apis/build/status/MicrosoftAccountProfileInformation)](https://dev.azure.com/talha0113/Open%20Source/_build/latest?definitionId=36)
 
 
 ## SharePoint Proxy 
