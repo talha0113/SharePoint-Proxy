@@ -26,8 +26,6 @@ jobs:
   
   variables:
   - group: 'SharePoint-Proxy'
-  - name: 'tag_number'
-    value: '$(Year:yyyy).$(Month).$(DayOfMonth).$(rev:r)'
   - name: 'build_configuration'
     value: 'Release'
 
@@ -46,6 +44,11 @@ jobs:
     inputs:
       command: restore
       projects: '**/*.csproj'
+
+  # Perform Code Security Check
+  - task: whitesource.ws-bolt.bolt.wss.WhiteSource Bolt@18
+    displayName: 'Code Security Check'
+    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
   # Perform .Net Core Build
   - task: DotNetCoreCLI@2
@@ -79,15 +82,31 @@ jobs:
       zipAfterPublish: false
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
   
+  - task: Docker@1
+    displayName: 'Build Image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: 'Docker Registry'
+      dockerFile: Proxy/Dockerfile
+      imageName: 'SharePoint-Proxy:$(Build.BuildId)'
+      includeLatestTag: true
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
+  - task: Docker@1
+    displayName: 'Push an image'
+    inputs:
+      containerregistrytype: 'Container Registry'
+      dockerRegistryEndpoint: 'Docker Registry'
+      command: 'Push an image'
+      imageName: 'SharePoint-Proxy:$(Build.BuildId)'
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+
   # Publish Artifacts
   - task: PublishBuildArtifacts@1
     displayName: 'Publish'
     inputs:
       PathtoPublish: 'Proxy/Publish/Proxy'
       ArtifactName: Drop
-    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), neq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
-  # Perform Code Security Check
-  - task: whitesource.ws-bolt.bolt.wss.WhiteSource Bolt@18
-    displayName: 'Code Security Check'
-    condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
+  
