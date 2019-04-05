@@ -107,6 +107,6 @@ jobs:
     inputs:
       PathtoPublish: 'Proxy/Publish/Proxy'
       ArtifactName: Drop
-    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), neq(variables['Build.SourceBranch'], 'refs/heads/master'))
+    condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), ne(variables['Build.SourceBranch'], 'refs/heads/master'))
 
   
