@@ -58,17 +58,12 @@ jobs:
       arguments: '--configuration $(build_configuration)'
   
   # Perform .Net Core Test
-  - task: VSTest@2
+  - task: DotNetCoreCLI@2
     displayName: Test
     inputs:
-      testAssemblyVer2: |
-       **\*Test*.dll
-       !**\*TestAdapter.dll
-       !**\obj\**
-      searchFolder: 'Proxy.Test'
-      runTestsInIsolation: true
-      codeCoverageEnabled: true
-      testRunTitle: 'Integration Tests'
+      command: test
+      projects: 'Proxy.Test/*.csproj'
+      arguments: '--configuration $(build_configuration)'
     condition: and(succeeded(), eq(variables['Build.Reason'], 'PullRequest'))
 
   # Perform .Net Core Publish
