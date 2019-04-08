@@ -83,7 +83,7 @@ jobs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: 'Docker Registry'
       dockerFile: Proxy/Dockerfile
-      imageName: 'talha0113/SharePoint-Proxy:$(Build.BuildId)'
+      imageName: 'talha0113/SharePoint-Proxy:$(Build.BuildNumber)'
       includeLatestTag: true
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
@@ -93,7 +93,7 @@ jobs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: 'Docker Registry'
       command: 'Push an image'
-      imageName: 'talha0113/sharepoint-proxy:$(Build.BuildId)'
+      imageName: 'talha0113/sharepoint-proxy'
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
   # Publish Artifacts
