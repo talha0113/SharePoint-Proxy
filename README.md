@@ -2,14 +2,14 @@
 
 ## SharePoint Proxy 
 
-**Share Online Proxy** helps redirect all the api requests to sharepoint online site, during the local front end development eith script editor webpart based approach or Add In based development. As it becomes really difficult to compile the front end application deploy test and fix.
+**Share Online Proxy** helps redirect all the api requests to sharepoint online site, during the local front end development with script editor webpart based approach or Add In based development. As it becomes really difficult to compile the front end application deploy test and fix.
 
 ## Usage
 
 To start the proxy:
-```sh
+``
 docker run --rm --name talha0113/sharepoint-proxy -p 8080:80 -e ASPNETCORE_ENVIRONMENT='Production' -e ProxySetting:BaseUrl='<SharePoint Site Collection Url>' -e ProxySetting:UserName='<User Name>' -e ProxySetting:Password='<Password>' -i sharepoint-proxy
-```
+``
 Replace Following Paramaters
  - **`<SharePoint Site Collection Url>`**, example: (https://domain.sharepoint.com/sites/xyz)
  - **`<User Name>`**, example: (user@domain.onmicrosoft.com)
