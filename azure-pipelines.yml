@@ -77,6 +77,7 @@ jobs:
       zipAfterPublish: false
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'))
   
+  # Perform Docker Image Build
   - task: Docker@1
     displayName: 'Build Image'
     inputs:
@@ -87,8 +88,9 @@ jobs:
       includeLatestTag: true
     condition: and(succeeded(), in(variables['Build.Reason'], 'IndividualCI', 'BatchedCI', 'Manual'), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
 
+  # Perform Docker Image Push
   - task: Docker@1
-    displayName: 'Push an image'
+    displayName: 'Push Image'
     inputs:
       containerregistrytype: 'Container Registry'
       dockerRegistryEndpoint: 'Docker Registry'
