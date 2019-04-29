@@ -8,7 +8,7 @@
 
 To start the proxy:
 ``
-docker run --rm --name talha0113/sharepoint-proxy -p 8080:80 -e ASPNETCORE_ENVIRONMENT='Production' -e ProxySetting:BaseUrl='<SharePoint Site Collection Url>' -e ProxySetting:UserName='<User Name>' -e ProxySetting:Password='<Password>' -i sharepoint-proxy
+docker run --rm --name sharepoint-proxy-container -p 8080:80 -e ASPNETCORE_ENVIRONMENT='Production' -e ProxySetting:BaseUrl='<SharePoint Site Collection Url>' -e ProxySetting:UserName='<User Name>' -e ProxySetting:Password='<Password>' -i talha0113/sharepoint-proxy
 ``
 Replace Following Paramaters
  - **`<SharePoint Site Collection Url>`**, example: (https://domain.sharepoint.com/sites/xyz)
